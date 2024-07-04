@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const hostname = window.location.hostname;
 // const apiUrl = `//${hostname}:3070/v1/`;
-const apiUrl = `http://172.20.10.12:3070/v1/`;
+const apiUrl = `http://fx-1.iot:3070/v1/`;
 
 // Define a service using a base URL and expected endpoints
 export const iotApi = createApi({

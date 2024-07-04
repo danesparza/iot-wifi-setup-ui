@@ -19,6 +19,7 @@ function SetupHome() {
 
     //  State hooks
     const [selectedAP, setSelectedAP] = useState(null);
+    const [selectedPassword, setSelectedPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
     //  Redux hooks
@@ -47,6 +48,14 @@ function SetupHome() {
         handlePasswordDisplay(e.value);
     };
 
+    const onWifiSave = () => {
+        let password = "";
+        if (showPassword) {
+            password = selectedPassword;
+        }
+        console.log("Saving wifi with network / password: ", selectedAP.SSID, password)
+    };
+
     return (
         <React.Fragment>
             <div className="flex justify-content-center align-items-center min-h-screen">
@@ -67,12 +76,12 @@ function SetupHome() {
                         {showPassword && (
                             <React.Fragment>
                                 <label htmlFor="password" className="block text-900 font-medium mb-2">Password</label>
-                                <InputText type="password" placeholder="Password" className="w-full mb-3"/>
+                                <InputText type="password" placeholder="Password" value={selectedPassword} onChange={(e) => setSelectedPassword(e.target.value)} className="w-full mb-3"/>
                             </React.Fragment>
                         )}
 
 
-                        <Button label="Select wifi network" className="w-full"/>
+                        <Button label="Select wifi network" className="w-full" onClick={onWifiSave}/>
                     </div>
                 </div>
             </div>
