@@ -33,39 +33,6 @@ function SetupHome() {
         );
     }
 
-    const selectedAPTemplate = (option, props) => {
-        if (option) {
-            let itemClass = "";
-
-            if(option.Security === "") {
-                itemClass = "pi pi-lock-open";
-            }
-            return (
-                <div className="flex align-items-center">
-                    <div>{option.SSID}</div>
-                    &nbsp;&nbsp;<span className={`${itemClass}`} style={{ width: '18px' }} />
-                </div>
-            );
-        }
-
-        return <span>{props.placeholder}</span>;
-    };
-
-    const apOptionTemplate = (option) => {
-        let itemClass = "";
-
-        //  If the ap item has security, show a lock
-        if(option.Security === "") {
-            itemClass = "pi pi-lock-open";
-        }
-        return (
-            <div className="flex align-items-center">
-                <div>{option.SSID}</div>
-                &nbsp;&nbsp;<span className={`${itemClass}`} style={{width: '18px'}}/>
-            </div>
-        );
-    };
-
     const handlePasswordDisplay = (selectedValue) => {
         console.log('Selected Value:', selectedValue);
         if (selectedValue.Security !== "") {
@@ -94,10 +61,8 @@ function SetupHome() {
 
                     <div>
                         <label htmlFor="apList" className="block text-900 font-medium mb-2">Wireless networks</label>
-                        <Dropdown id="apList" value={selectedAP} onChange={onAPChange} options={apData.data}
-                                  optionLabel="SSID" placeholder="Select a wifi network" checkmark={true}
-                                  itemTemplate={apOptionTemplate} valueTemplate={selectedAPTemplate}
-                                  className="w-full mb-3" />
+                        <Dropdown id="apList" value={selectedAP} onChange={onAPChange} options={apData.data} optionLabel="SSID"
+                                  placeholder="Select a wifi network" checkmark={true} className="w-full mb-3" />
 
                         {showPassword && (
                             <React.Fragment>
