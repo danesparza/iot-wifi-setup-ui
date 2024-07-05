@@ -7,7 +7,8 @@ import Loading from "./common/Loading";
 
 //  Data services
 import {
-   useGetWifiAPsQuery
+    useConfigureClientMutation,
+    useGetWifiAPsQuery
 } from '../services/iot-wifi-setup'
 
 function SetupHome() {
@@ -24,6 +25,7 @@ function SetupHome() {
 
     //  Redux hooks
     const { data: apData , isLoading: apsLoading} = useGetWifiAPsQuery("",stdOptions);
+    const [updateNetworkConfig] = useConfigureClientMutation("");
 
     //  If we're not done loading, show the loading indicator
     if(apsLoading) {
@@ -53,7 +55,18 @@ function SetupHome() {
         if (showPassword) {
             password = selectedPassword;
         }
-        console.log("Saving wifi with network / password: ", selectedAP.SSID, password)
+
+        let request = {
+            ssid: selectedAP.SSID,
+            passphrase: password,
+        };
+
+        console.log("Saving wifi");
+        console.dir(request);
+
+        updateNetworkConfig(request);
+
+        //  Redirect to /#/sr ? 
     };
 
     return (

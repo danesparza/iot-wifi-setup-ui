@@ -15,7 +15,7 @@ import './App.css';
 
 //  App components
 import SetupHome from './components/SetupHome';
-import EditConnection from "./components/EditConnection";
+import SaveReboot from "./components/SaveReboot";
 import NotFound from './components/common/NotFound';
 
 function Routes() {
@@ -27,7 +27,7 @@ function Routes() {
   //  Example: /#/    <-- for the root
   return useRoutes([
     {path: "/", element: <SetupHome/>},
-    {path: "/edit", element: <EditConnection/>},
+    {path: "/sr", element: <SaveReboot/>},
     {path: "*", element: <NotFound/>}
   ]);
 }
