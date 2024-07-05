@@ -66,7 +66,7 @@ function SetupHome() {
 
         updateNetworkConfig(request);
 
-        //  Redirect to /#/sr ? 
+        //  Redirect to /#/sr ?
     };
 
     return (
