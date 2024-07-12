@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 //  React router
 import {HashRouter as Router, useRoutes} from 'react-router-dom';
@@ -6,7 +6,7 @@ import {HashRouter as Router, useRoutes} from 'react-router-dom';
 //  Primereact UI
 //  (Full list of themes here: https://primereact.org/theming/)
 import "primeflex/primeflex.css";                                   //flex
-import "primereact/resources/themes/md-light-indigo/theme.css";      //theme
+// theme is located in index.html now
 import "primereact/resources/primereact.min.css";                   //core css
 import "primeicons/primeicons.css";                                 //icons
 
@@ -33,6 +33,53 @@ function Routes() {
 }
 
 function App() {
+
+    const [theme, setTheme] = useState('light');
+
+    useEffect(() => {
+        const setThemeMode = (mode) => {
+            const existingLink = document.getElementById('app-theme-css');
+            if (existingLink) {
+                existingLink.href = `/themes/md-${mode}-indigo/theme.css`;
+            } else {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = `/themes/md-${mode}-indigo/theme.css`;
+                link.id = 'app-theme-css';
+                document.head.appendChild(link);
+            }
+            return () => {
+                const existingLink = document.getElementById('theme-link');
+                if (existingLink) {
+                    document.head.removeChild(existingLink);
+                }
+            };
+        }
+
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = isDarkMode ? 'dark' : 'light';
+        setTheme(initialTheme);
+        const cleanup = setThemeMode(isDarkMode ? 'dark' : 'light');
+
+        // Listen for changes to the color scheme preference
+        const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = (e) => {
+            const newMode = e.matches ? 'dark' : 'light';
+            setTheme(newMode);
+            cleanup();
+            setThemeMode(newMode);
+        };
+
+        mediaQueryList.addEventListener('change', handleChange);
+
+        return () => {
+            mediaQueryList.removeEventListener('change', handleChange);
+            cleanup();
+        };
+
+    }, [theme]);
+
+
   return (
       <Router>
         <Routes/>
