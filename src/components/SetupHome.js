@@ -36,6 +36,26 @@ function SetupHome() {
         );
     }
 
+    //  It's valid to have duplicates in the list of aps (they are the same SSID on different channels)
+    //  I don't want to show duplicates.
+
+    //  Approach 1: add a displayName field to the apData array and display
+    //  the reason there is a duplicate (we show the channel number as well)
+    // const updatedAPList = apData.data.map(item => ({
+    //     ...item,
+    //     displayName: `${item.SSID} (channel ${item.Channel})`
+    // }));
+
+    //  Approach 2: dedupe the list.  All duplicates after the first occurrence
+    //  of an SSID will be removed.  This will have the effect of keeping the
+    //  reference to an SSID with the strongest signal.
+    const updatedAPList = apData.data.reduce((accumulator, current) => {
+        if (!accumulator.some(item => item.SSID === current.SSID)) {
+            accumulator.push(current);
+        }
+        return accumulator;
+    }, []);
+
     const handlePasswordDisplay = (selectedValue) => {
         console.log('Selected Value:', selectedValue);
         if (selectedValue.Security !== "") {
@@ -83,7 +103,7 @@ function SetupHome() {
 
                     <div>
                         <label htmlFor="apList" className="block text-900 font-medium mb-2">Wireless networks</label>
-                        <Dropdown id="apList" value={selectedAP} onChange={onAPChange} options={apData.data} optionLabel="SSID"
+                        <Dropdown id="apList" value={selectedAP} onChange={onAPChange} options={updatedAPList} optionLabel="SSID"
                                   placeholder="Select a wifi network" checkmark={true} className="w-full mb-3" />
 
                         {showPassword && (

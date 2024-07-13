@@ -4,9 +4,8 @@ import React, {useEffect, useState} from 'react';
 import {HashRouter as Router, useRoutes} from 'react-router-dom';
 
 //  Primereact UI
-//  (Full list of themes here: https://primereact.org/theming/)
+//  Theme selection is below, in component render
 import "primeflex/primeflex.css";                                   //flex
-// theme is located in index.html now
 import "primereact/resources/primereact.min.css";                   //core css
 import "primeicons/primeicons.css";                                 //icons
 
@@ -40,6 +39,8 @@ function App() {
         const setThemeMode = (mode) => {
             const existingLink = document.getElementById('app-theme-css');
             if (existingLink) {
+                //  Full list of themes under the 'public/themes' folder
+                //  Examples are here: https://primereact.org/theming/
                 existingLink.href = `/themes/md-${mode}-indigo/theme.css`;
             } else {
                 const link = document.createElement('link');
