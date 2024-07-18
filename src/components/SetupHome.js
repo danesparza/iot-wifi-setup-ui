@@ -86,7 +86,10 @@ function SetupHome() {
 
         updateNetworkConfig(request);
 
-        //  Redirect to /#/sr ?
+        //  Redirect to /#/sr
+        setTimeout(function(){
+            window.location.href = "/#/sr";
+        }, 1000);
     };
 
     return (
